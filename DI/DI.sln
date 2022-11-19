@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "setter-injection", "setter-injection\setter-injection.csproj", "{11068662-4FC2-4509-B7F7-4136FEC15E17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "interface-injection", "interface-injection\interface-injection.csproj", "{167C6F53-A8CD-45B8-A03E-167C7DFA8EDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{11068662-4FC2-4509-B7F7-4136FEC15E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11068662-4FC2-4509-B7F7-4136FEC15E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11068662-4FC2-4509-B7F7-4136FEC15E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{167C6F53-A8CD-45B8-A03E-167C7DFA8EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{167C6F53-A8CD-45B8-A03E-167C7DFA8EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{167C6F53-A8CD-45B8-A03E-167C7DFA8EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{167C6F53-A8CD-45B8-A03E-167C7DFA8EDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
