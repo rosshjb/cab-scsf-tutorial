@@ -79,3 +79,18 @@ DI가 동작하려면, 일반적으로 주입되는 객체(이하 dependency)는
 - 컨테이너가 client에 dependency를 DI해주려면, 마찬가지로 컨테이너는 client에 대해서 생성과 dependency 설정 방법을 알고 있어야 하므로 container에서 managed되어야 한다.
   - `WorkItem`의 적절한 컬렉션의 `AddNew`를 호출했을 때, client 객체 생성과 함께 dependency의 DI 발생.
   - `WorkItem`의 적절한 컬렉션의 `Add`에 기존에 존재하는 client 객체를 넘겼을 때 dependency의 DI 발생.
+
+## CAB의 DI 유형
+
+1. `ComponentDependency(string id)` : 기존에 `WorkItem`의 `Items` 컬렉션에 존재하는 객체를 setter에서 주입받을 때 사용하는 attribute. 동일 타입의 여러 인스턴스가 존재할 수 있으므로 id를 명시해야 한다(객체를 등록하는 쪽에서 id를 생략했다면, CAB가 할당한 GUID를 id로 갖게 된다). 객체를 찾을 수 없으면 `DependencyMissingException`이 던져진다:
+    ```cs
+    [ComponentDependency(string id, [bool CreateIfNotFound, bool Required, System.Type Type])]
+    ```
+2. `ServiceDependency` : 기존에 `WorkItem`의 `Services` 컬렉션에 존재하는 객체를 setter에서 주입받을 때 사용하는 attribute. 하나의 `Services` 컬렉션에 임의 타입의 인스턴스는 하나만 존재할 수 있다(그래서 id가 필요없음):
+    ```cs
+    [ServiceDependency([bool Required, System.Type Type])]
+    ```
+3. `CreateNew` : 객체가 새로 만들어져 `WorkItem`의 `Items` 컬렉션에 추가된 후 setter에서 주입받을 때 사용하는 attribute:
+    ```cs
+    [CreateNew]
+    ```
