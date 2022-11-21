@@ -79,6 +79,7 @@ DI가 동작하려면, 일반적으로 주입되는 객체(이하 dependency)는
 - 컨테이너가 client에 dependency를 DI해주려면, 마찬가지로 컨테이너는 client에 대해서 생성과 dependency 설정 방법을 알고 있어야 하므로 container에서 managed되어야 한다.
   - `WorkItem`의 적절한 컬렉션의 `AddNew`를 호출했을 때, client 객체 생성과 함께 dependency의 DI 발생.
   - `WorkItem`의 적절한 컬렉션의 `Add`에 기존에 존재하는 client 객체를 넘겼을 때 dependency의 DI 발생.
+  - `WorkItem`의 컬렉션에 `AddNew`/`Add` 했을 때, 적절하게 객체를 생성 및 dependency를 lookup하여 resolution하는 것은 CAB의 ObjectBuilder(i.e. Factory)의 책임.
 
 ## CAB의 DI 유형
 
@@ -94,3 +95,9 @@ DI가 동작하려면, 일반적으로 주입되는 객체(이하 dependency)는
     ```cs
     [CreateNew]
     ```
+
+## ModuleInit과 WorkItem의 DI
+
+- module이 `ServiceDependency` attribute를 통해 `WorkItem`을 주입받을 수 있는데, 이는 주입받는 module 또한 container managed object라는 뜻이다. 실제로 CAB는 module을 생성하면서 root `WorkItem`의 `Items` 컬렉션에 `ModuleInit` 객체들을 추가한다.
+- 마찬가지로 module이 `ServiceDependency` attribute를 통해 `WorkItem`을 주입받을 수 있다는 것은, 주입되는 dependency인 `WorkItem` 또한 container managed object라는 뜻이다. 실제로 CAB는 임의의 `WorkItem`을 그 `WorkItem`의 `Services` 컬렉션에 추가한다.
+- (번외) Shell form 또한 자동으로 root `WorkItem`의 `Items` 컬렉션에 추가되는 container managed object이다. 그러므로 dependency를 주입받을 수 있다.
