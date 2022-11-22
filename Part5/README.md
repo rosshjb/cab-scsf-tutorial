@@ -101,3 +101,10 @@ DI가 동작하려면, 일반적으로 주입되는 객체(이하 dependency)는
 - module이 `ServiceDependency` attribute를 통해 `WorkItem`을 주입받을 수 있는데, 이는 주입받는 module 또한 container managed object라는 뜻이다. 실제로 CAB는 module을 생성하면서 root `WorkItem`의 `Items` 컬렉션에 `ModuleInit` 객체들을 추가한다.
 - 마찬가지로 module이 `ServiceDependency` attribute를 통해 `WorkItem`을 주입받을 수 있다는 것은, 주입되는 dependency인 `WorkItem` 또한 container managed object라는 뜻이다. 실제로 CAB는 임의의 `WorkItem`을 그 `WorkItem`의 `Services` 컬렉션에 추가한다.
 - (번외) Shell form 또한 자동으로 root `WorkItem`의 `Items` 컬렉션에 추가되는 container managed object이다. 그러므로 dependency를 주입받을 수 있다.
+
+## Items, Services, WorkItems
+
+`WorkItem`은 자식 `WorkItem`들을 담는 `WorkItems` 컬렉션을 통해 계층 관계를 구성한다:
+
+- 임의의 `WorkItem`의 `Items` 컬렉션에서 managed되는 dependency들은 동일 `WorkItem`의 객체에 대해서만 DI된다; 동일 `WorkItem` 상에 있지 않음에도 객체를 주입받으려 시도할 경우 `DependencyMissingException`.
+- 하지만 임의의 `WorkItem`의 `Services` 컬렉션에서 managed되는 dependency들은 임의의 자손 `WorkItem`의 객체에 얼마든지 DI될 수 있다; `WorkItem`의 `Services` 컬렉션에서 찾을 수 없으면 조상을 타고 올라가 root 까지 찾아보기 때문.
