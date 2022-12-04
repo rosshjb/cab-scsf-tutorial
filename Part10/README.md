@@ -78,3 +78,29 @@ public void changeStatusOfTheButton(Object sender, EventArgs e)
         command.Status = CommandStatus.Enabled;
 }
 ```
+
+## command handler의 parameter
+
+command handler의 parameter는 다음과 같이 고정되어 있다. 즉, .NET framework의 이벤트 핸들러에서 `sender` parameter에 Invoker가 되는 UI control이 넘겨지는 것이 아니라 `Command` 객체가 전달된다(그래서 command handler 내에서 command를 발생시킨 Invoker를 특정하기란 그렇게 단순하지 않다 — 그 필요성을 차치하고서라도):
+
+```cs
+[CommandHandler("ShowMessageCommand")]
+public void showMessage(object sender, EventArgs e)
+{
+    Console.WriteLine(sender);                  // Microsoft.Practices.CompositeUI.Commands.Command
+    Console.WriteLine(e == EventArgs.Empty);    // True
+
+    MessageBox.Show("hello, world");
+}
+```
+
+parameter로 다른 값을 전달할 방법은 제공되지 않는다. 이는 비단 .NET framework의 이벤트 핸들러를 사용하더라도 별반 다르지 않다(단지, `sender`로 Invoker가 되는 UI control이 넘겨질 뿐이다):
+
+```cs
+private void eventButton_Click(object sender, EventArgs e)
+{
+    Console.WriteLine(sender.GetType());  // System.Windows.Forms.ToolStripButton
+
+    MessageBox.Show("hello, world");
+}
+```
