@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "command-status", "command-s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "command-handler-parameters", "command-handler-parameters\command-handler-parameters.csproj", "{AEE4FFD0-0DE7-41BA-9291-DC2949602D46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "command-execute", "command-execute\command-execute.csproj", "{5A99B9D9-9111-45E6-AAFF-CF0CDFA42444}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AEE4FFD0-0DE7-41BA-9291-DC2949602D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEE4FFD0-0DE7-41BA-9291-DC2949602D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEE4FFD0-0DE7-41BA-9291-DC2949602D46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A99B9D9-9111-45E6-AAFF-CF0CDFA42444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A99B9D9-9111-45E6-AAFF-CF0CDFA42444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A99B9D9-9111-45E6-AAFF-CF0CDFA42444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A99B9D9-9111-45E6-AAFF-CF0CDFA42444}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

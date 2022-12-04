@@ -104,3 +104,21 @@ private void eventButton_Click(object sender, EventArgs e)
     MessageBox.Show("hello, world");
 }
 ```
+
+## command의 직접 실행
+
+command pattern에서 Invoker는 Command를 추상화된 형태로 실행하게 되는데, 마찬가지로 CAB의 `Command`도 이를 위한 `Execute` 메서드를 가지며, `CommandHandler`를 이용하지 않고 직접 command를 실행하는 용도로 사용될 수도 있다:
+
+```cs
+[CommandHandler("ShowMessageCommand")]
+public void showMessage(Object sender, EventArgs e)
+{
+    MessageBox.Show("hello, world");
+}
+
+private void showMessageButton2_Click(object sender, EventArgs e)
+{
+    Command command = rootWorkItem.Commands["ShowMessageCommand"];
+    command.Execute();
+}
+```
