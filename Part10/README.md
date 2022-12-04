@@ -122,3 +122,45 @@ private void showMessageButton2_Click(object sender, EventArgs e)
     command.Execute();
 }
 ```
+
+## CAB command의 커스텀 이벤트 지원
+
+CAB의 `Command` 메커니즘에서 Invoker가 사용할 수 있는 이벤트로는 `ToolStripItem`과 `Control`의 이벤트들로 제한된다. 이는 기본적으로 CAB의 `CommandAdapter`가 `ToolStripItem`과 `Control`에 대해서만 등록되어 있기 때문이다:
+
+- 커스텀 이벤트를 지원하려면 해야할 일이 추가적으로 생기기 때문에 CAB의 command는 일반적으로 메뉴 시스템에서 주로 사용된다.
+
+CAB의 `Command` 메커니즘에 임의의 Invoker 및 (그 커스텀 이벤트)도 지원할 수 있으려면, `CommandAdapterMapService` 서비스에 Invoker의 타입과 해당 Invoker를 지원할 수 있도록 하는 `CommandAdapter`의 파생 타입을 넘기면서 등록을 해주면 된다. 단, 내부적으로 .NET의 이벤트를 사용하는 경우에는 직접 `CommandAdapter`의 파생 클래스를 만들 필요없이 `EventCommandAdapter`를 사용하면 된다:
+
+```cs
+var commandMapService = RootWorkItem.Services.Get<ICommandAdapterMapService>();
+commandMapService.Register(typeof(EventInvoker), typeof(EventCommandAdapter<EventInvoker>));
+
+var invoker = new EventInvoker();
+var receiver = RootWorkItem.Items.AddNew<EventCABReceiver>();
+
+RootWorkItem.Commands["ShowMessageCommand"]
+    .AddInvoker(invoker, "customEvent");
+
+invoker.request(); // fire .NET event -> invoke command -> call command handler
+```
+
+```cs
+public class EventInvoker
+{
+    public event EventHandler customEvent;
+
+    public void request()
+    {
+        customEvent(this, EventArgs.Empty);
+    }
+}
+
+public class EventCABReceiver
+{
+    [CommandHandler("ShowMessageCommand")]
+    public void sink(object sender, EventArgs e)
+    {
+        MessageBox.Show("sink the event with CAB");
+    }
+}
+```
