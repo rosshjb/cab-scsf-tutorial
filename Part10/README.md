@@ -45,3 +45,36 @@ private void button2_Click(object sender, EventArgs e)
 ```
 
 하지만 CAB의 command를 이용하면 `WorkItem` 상에 존재하는 임의의 객체에 command handler를 하나만 설치해두고, 해당 command를 발생시킬 Invoker만 추가해주면 된다.
+
+## CommandStatus
+
+`Command` 객체의 `Status`를 이용하면 해당 `Command`와 연관되어 있는 Invoker의 상태를 변경할 수 있다:
+
+```cs
+public enum CommandStatus
+{
+    Enabled,
+    Disabled,
+    Unavailable
+}
+```
+
+```cs
+[CommandHandler("ShowMessageCommand")]
+public void showMessage(Object sender, EventArgs e)
+{
+    MessageBox.Show("hello, world");
+}
+
+[CommandHandler("ChangeStatusCommand")]
+public void changeStatusOfTheButton(Object sender, EventArgs e)
+{
+    Command command = rootWorkItem.Commands["ShowMessageCommand"];
+    
+    // ShowMessageCommand 커맨드와 연관된 UI 컨트롤의 상태를 변경한다.
+    if (command.Status == CommandStatus.Enabled)
+        command.Status = CommandStatus.Disabled;
+    else
+        command.Status = CommandStatus.Enabled;
+}
+```
